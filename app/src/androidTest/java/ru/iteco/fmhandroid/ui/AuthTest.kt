@@ -34,50 +34,21 @@ class AuthTest {
     @Rule
     @JvmField
     var mActivityScenarioRule = ActivityScenarioRule(AppActivity::class.java)
-
     @Test
     fun authTest() {
-        val textInputEditText = onView(
-            allOf(
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.login_text_input_layout),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
+        val textInputEditText = onView(withId(R.id.login_text_input_layout));
+        textInputEditText.check(matches(isDisplayed()));
         textInputEditText.perform(replaceText("login2"), closeSoftKeyboard())
 
-        val textInputEditText2 = onView(
-            allOf(
-                childAtPosition(
-                    childAtPosition(
-                        withId(R.id.password_text_input_layout),
-                        0
-                    ),
-                    0
-                ),
-                isDisplayed()
-            )
-        )
+        val textInputEditText2 = onView(withId(R.id.password_text_input_layout));
+        textInputEditText2.check(matches(isDisplayed()));
+
         textInputEditText2.perform(replaceText("password2"), closeSoftKeyboard())
 
         val materialButton = onView(
             allOf(
-                withId(R.id.enter_button), withText("Sign in"), withContentDescription("Save"),
-                childAtPosition(
-                    childAtPosition(
-                        withClassName(`is`("android.widget.RelativeLayout")),
-                        1
-                    ),
-                    2
-                ),
-                isDisplayed()
-            )
-        )
+                withId(R.id.enter_button), withText("Sign in"), withContentDescription("Save")));
+        materialButton.check(matches(isDisplayed()));
         materialButton.perform(click())
 
         val textView = onView(
@@ -90,21 +61,79 @@ class AuthTest {
         textView.check(matches(withText("News")))
     }
 
-    private fun childAtPosition(
-        parentMatcher: Matcher<View>, position: Int
-    ): Matcher<View> {
 
-        return object : TypeSafeMatcher<View>() {
-            override fun describeTo(description: Description) {
-                description.appendText("Child at position $position in parent ")
-                parentMatcher.describeTo(description)
-            }
 
-            public override fun matchesSafely(view: View): Boolean {
-                val parent = view.parent
-                return parent is ViewGroup && parentMatcher.matches(parent)
-                        && view == parent.getChildAt(position)
-            }
-        }
-    }
+
+//    @Test
+//    fun authTest() {
+//        val textInputEditText = onView(
+//            allOf(
+//                childAtPosition(
+//                    childAtPosition(
+//                        withId(R.id.login_text_input_layout),
+//                        0
+//                    ),
+//                    0
+//                ),
+//                isDisplayed()
+//            )
+//        )
+//        textInputEditText.perform(replaceText("login2"), closeSoftKeyboard())
+//
+//        val textInputEditText2 = onView(
+//            allOf(
+//                childAtPosition(
+//                    childAtPosition(
+//                        withId(R.id.password_text_input_layout),
+//                        0
+//                    ),
+//                    0
+//                ),
+//                isDisplayed()
+//            )
+//        )
+//        textInputEditText2.perform(replaceText("password2"), closeSoftKeyboard())
+//
+//        val materialButton = onView(
+//            allOf(
+//                withId(R.id.enter_button), withText("Sign in"), withContentDescription("Save"),
+//                childAtPosition(
+//                    childAtPosition(
+//                        withClassName(`is`("android.widget.RelativeLayout")),
+//                        1
+//                    ),
+//                    2
+//                ),
+//                isDisplayed()
+//            )
+//        )
+//        materialButton.perform(click())
+//
+//        val textView = onView(
+//            allOf(
+//                withText("News"),
+//                withParent(withParent(withId(R.id.container_list_news_include_on_fragment_main))),
+//                isDisplayed()
+//            )
+//        )
+//        textView.check(matches(withText("News")))
+//    }
+//
+//    private fun childAtPosition(
+//        parentMatcher: Matcher<View>, position: Int
+//    ): Matcher<View> {
+//
+//        return object : TypeSafeMatcher<View>() {
+//            override fun describeTo(description: Description) {
+//                description.appendText("Child at position $position in parent ")
+//                parentMatcher.describeTo(description)
+//            }
+//
+//            public override fun matchesSafely(view: View): Boolean {
+//                val parent = view.parent
+//                return parent is ViewGroup && parentMatcher.matches(parent)
+//                        && view == parent.getChildAt(position)
+//            }
+//        }
+//    }
 }
